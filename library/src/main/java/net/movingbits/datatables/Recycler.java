@@ -1,4 +1,4 @@
-package com.inqbarna.tablefixheaders;
+package net.movingbits.datatables;
 
 import java.util.Stack;
 

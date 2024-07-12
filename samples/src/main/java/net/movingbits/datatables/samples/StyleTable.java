@@ -1,22 +1,22 @@
-package com.inqbarna.tablefixheaders.samples;
+package net.movingbits.datatables.samples;
+
+import net.movingbits.datatables.Datatable;
+import net.movingbits.datatables.samples.adapters.SampleTableAdapter;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.os.Bundle;
 
-import com.inqbarna.tablefixheaders.TableFixHeaders;
-import com.inqbarna.tablefixheaders.samples.adapters.SampleTableAdapter;
-
 public class StyleTable extends Activity {
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.table);
 
-		TableFixHeaders tableFixHeaders = (TableFixHeaders) findViewById(R.id.table);
-		tableFixHeaders.setAdapter(new MyAdapter(this));
+		final Datatable datatable = (Datatable) findViewById(R.id.table);
+		datatable.setAdapter(new MyAdapter(this));
 	}
 
 	public class MyAdapter extends SampleTableAdapter {
@@ -24,10 +24,10 @@ public class StyleTable extends Activity {
 		private final int width;
 		private final int height;
 
-		public MyAdapter(Context context) {
+		public MyAdapter(final Context context) {
 			super(context);
 
-			Resources resources = context.getResources();
+			final Resources resources = context.getResources();
 
 			width = resources.getDimensionPixelSize(R.dimen.table_width);
 			height = resources.getDimensionPixelSize(R.dimen.table_height);
@@ -44,22 +44,22 @@ public class StyleTable extends Activity {
 		}
 
 		@Override
-		public int getWidth(int column) {
+		public int getWidth(final int column) {
 			return width;
 		}
 
 		@Override
-		public int getHeight(int row) {
+		public int getHeight(final int row) {
 			return height;
 		}
 
 		@Override
-		public String getCellString(int row, int column) {
+		public String getCellString(final int row, final int column) {
 			return "Lorem (" + row + ", " + column + ")";
 		}
 
 		@Override
-		public int getLayoutResource(int row, int column) {
+		public int getLayoutResource(final int row, final int column) {
 			final int layoutResource;
 			switch (getItemViewType(row, column)) {
 				case 0:
@@ -75,7 +75,7 @@ public class StyleTable extends Activity {
 		}
 
 		@Override
-		public int getItemViewType(int row, int column) {
+		public int getItemViewType(final int row, final int column) {
 			if (row < 0) {
 				return 0;
 			} else {

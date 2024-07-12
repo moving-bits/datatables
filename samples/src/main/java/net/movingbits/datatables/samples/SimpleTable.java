@@ -1,7 +1,7 @@
-package com.inqbarna.tablefixheaders.samples;
+package net.movingbits.datatables.samples;
 
-import com.inqbarna.tablefixheaders.TableFixHeaders;
-import com.inqbarna.tablefixheaders.samples.adapters.MatrixTableAdapter;
+import net.movingbits.datatables.Datatable;
+import net.movingbits.datatables.samples.adapters.MatrixTableAdapter;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -9,12 +9,12 @@ import android.os.Bundle;
 public class SimpleTable extends Activity {
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.table);
 
-		TableFixHeaders tableFixHeaders = (TableFixHeaders) findViewById(R.id.table);
-		MatrixTableAdapter<String> matrixTableAdapter = new MatrixTableAdapter<String>(this, new String[][] {
+		final Datatable datatable = (Datatable) findViewById(R.id.table);
+		final MatrixTableAdapter<String> matrixTableAdapter = new MatrixTableAdapter<String>(this, new String[][] {
 				{
 						"Header 1",
 						"Header 2",
@@ -79,6 +79,6 @@ public class SimpleTable extends Activity {
 						"fugiat",
 						"nulla" },
 		});
-		tableFixHeaders.setAdapter(matrixTableAdapter);
+		datatable.setAdapter(matrixTableAdapter);
 	}
 }

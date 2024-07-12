@@ -1,10 +1,9 @@
 # TableFixHeaders
 
-[DISCONTINUED] This project it's not deprecated, it do what it must, but we
-don't have time to improve it or, even, answer issues.
+This is a stripped-down version of [InQBarna's TableFixHeader](https://github.com/InQBarna/TableFixHeaders/), adjusted to my needs.
 
 ## What is it?
-TableFixHeaders is an Android widget to display tables with headers.
+datatable is an Android widget to display tables with fixed headers.
 
 ## Features
 
@@ -24,18 +23,9 @@ TableFixHeaders is an Android widget to display tables with headers.
 
 * Supports all the screens sizes and density.
 
-## Sample
-You can download the app test from here: http://bit.ly/13buAIq
-
-![QR](https://raw.github.com/InQBarna/TableFixHeaders/master/web/qr.png "Sample")
-
-## Screenshots
-![Screenshot 1](https://raw.github.com/InQBarna/TableFixHeaders/master/web/screen1.png "Screenshot 1")
-
-![Screenshot 2](https://raw.github.com/InQBarna/TableFixHeaders/master/web/screen2.png "Screenshot 2")
-
 ## License
 
+    Copyright 2024 moving-bits
     Copyright 2012-2013 InQBarna
 
     Licensed under the Apache License, Version 2.0 (the "License");

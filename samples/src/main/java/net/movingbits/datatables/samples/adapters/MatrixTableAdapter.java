@@ -1,6 +1,6 @@
-package com.inqbarna.tablefixheaders.samples.adapters;
+package net.movingbits.datatables.samples.adapters;
 
-import com.inqbarna.tablefixheaders.adapters.BaseTableAdapter;
+import net.movingbits.datatables.adapters.BaseTableAdapter;
 
 import android.content.Context;
 import android.content.res.Resources;

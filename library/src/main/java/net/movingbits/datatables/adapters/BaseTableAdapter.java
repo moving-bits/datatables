@@ -1,24 +1,24 @@
-package com.inqbarna.tablefixheaders.adapters;
+package net.movingbits.datatables.adapters;
 
 import android.database.DataSetObservable;
 import android.database.DataSetObserver;
 
 /**
  * Common base class of common implementation for an {@link TableAdapter} that
- * can be used in {@link TableFixHeaders}.
+ * can be used in {@link net.movingbits.datatables.Datatable}.
  * 
- * @author Brais Gabín (InQBarna)
+ * @author Brais Gabín (InQBarna), moving-bits
  */
 public abstract class BaseTableAdapter implements TableAdapter {
 	private final DataSetObservable mDataSetObservable = new DataSetObservable();
 
 	@Override
-	public void registerDataSetObserver(DataSetObserver observer) {
+	public void registerDataSetObserver(final DataSetObserver observer) {
 		mDataSetObservable.registerObserver(observer);
 	}
 
 	@Override
-	public void unregisterDataSetObserver(DataSetObserver observer) {
+	public void unregisterDataSetObserver(final DataSetObserver observer) {
 		mDataSetObservable.unregisterObserver(observer);
 	}
 

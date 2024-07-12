@@ -1,9 +1,6 @@
-package com.inqbarna.tablefixheaders;
+package net.movingbits.datatables;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.inqbarna.tablefixheaders.adapters.TableAdapter;
+import net.movingbits.datatables.adapters.TableAdapter;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
@@ -20,13 +17,16 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Scroller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * This view shows a table which can scroll in both directions. Also still
  * leaves the headers fixed.
  * 
- * @author Brais Gabín (InQBarna)
+ * @author Brais Gabín (InQBarna), moving-bits
  */
-public class TableFixHeaders extends ViewGroup {
+public class Datatable extends ViewGroup {
 	private int currentX;
 	private int currentY;
 
@@ -74,7 +74,7 @@ public class TableFixHeaders extends ViewGroup {
 	 *            The Context the view is running in, through which it can
 	 *            access the current theme, resources, etc.
 	 */
-	public TableFixHeaders(Context context) {
+	public Datatable(final Context context) {
 		this(context, null);
 	}
 
@@ -94,7 +94,7 @@ public class TableFixHeaders extends ViewGroup {
 	 * @param attrs
 	 *            The attributes of the XML tag that is inflating the view.
 	 */
-	public TableFixHeaders(Context context, AttributeSet attrs) {
+	public Datatable(final Context context, final AttributeSet attrs) {
 		super(context, attrs);
 
 		this.headView = null;
@@ -142,7 +142,7 @@ public class TableFixHeaders extends ViewGroup {
 	 *            backing this list and for producing a view to represent an
 	 *            item in that data set.
 	 */
-	public void setAdapter(TableAdapter adapter) {
+	public void setAdapter(final TableAdapter adapter) {
 		if (this.adapter != null) {
 			this.adapter.unregisterDataSetObserver(tableAdapterDataSetObserver);
 		}
@@ -163,7 +163,7 @@ public class TableFixHeaders extends ViewGroup {
 	}
 
 	@Override
-	public boolean onInterceptTouchEvent(MotionEvent event) {
+	public boolean onInterceptTouchEvent(final MotionEvent event) {
 		boolean intercept = false;
 		switch (event.getAction()) {
 			case MotionEvent.ACTION_DOWN: {
@@ -172,8 +172,8 @@ public class TableFixHeaders extends ViewGroup {
 				break;
 			}
 			case MotionEvent.ACTION_MOVE: {
-				int x2 = Math.abs(currentX - (int) event.getRawX());
-				int y2 = Math.abs(currentY - (int) event.getRawY());
+				final int x2 = Math.abs(currentX - (int) event.getRawX());
+				final int y2 = Math.abs(currentY - (int) event.getRawY());
 				if (x2 > touchSlop || y2 > touchSlop) {
 					intercept = true;
 				}
@@ -184,7 +184,7 @@ public class TableFixHeaders extends ViewGroup {
 	}
 
 	@Override
-	public boolean onTouchEvent(MotionEvent event) {
+	public boolean onTouchEvent(final MotionEvent event) {
 		if (velocityTracker == null) { // If we do not have velocity tracker
 			velocityTracker = VelocityTracker.obtain(); // then get one
 		}
@@ -213,8 +213,8 @@ public class TableFixHeaders extends ViewGroup {
 			case MotionEvent.ACTION_UP: {
 				final VelocityTracker velocityTracker = this.velocityTracker;
 				velocityTracker.computeCurrentVelocity(1000, maximumVelocity);
-				int velocityX = (int) velocityTracker.getXVelocity();
-				int velocityY = (int) velocityTracker.getYVelocity();
+				final int velocityX = (int) velocityTracker.getXVelocity();
+				final int velocityY = (int) velocityTracker.getYVelocity();
 
 				if (Math.abs(velocityX) > minimumVelocity || Math.abs(velocityY) > minimumVelocity) {
 					flinger.start(getActualScrollX(), getActualScrollY(), velocityX, velocityY, getMaxScrollX(), getMaxScrollY());
@@ -231,7 +231,7 @@ public class TableFixHeaders extends ViewGroup {
 	}
 
 	@Override
-	public void scrollTo(int x, int y) {
+	public void scrollTo(final int x, final int y) {
 		if (needRelayout) {
 			scrollX = x;
 			firstColumn = 0;
@@ -244,7 +244,7 @@ public class TableFixHeaders extends ViewGroup {
 	}
 
 	@Override
-	public void scrollBy(int x, int y) {
+	public void scrollBy(final int x, final int y) {
 		scrollX += x;
 		scrollY += y;
 
@@ -441,7 +441,7 @@ public class TableFixHeaders extends ViewGroup {
 		addTopAndBottom(firstRow + size, size);
 	}
 
-	private void addLeftOrRight(int column, int index) {
+	private void addLeftOrRight(final int column, final int index) {
 		View view = makeView(-1, column, widths[column + 1], heights[0]);
 		rowViewList.add(index, view);
 
@@ -453,11 +453,11 @@ public class TableFixHeaders extends ViewGroup {
 		}
 	}
 
-	private void addTopAndBottom(int row, int index) {
+	private void addTopAndBottom(final int row, final int index) {
 		View view = makeView(row, -1, widths[0], heights[row + 1]);
 		columnViewList.add(index, view);
 
-		List<View> list = new ArrayList<View>();
+		final List<View> list = new ArrayList<View>();
 		final int size = rowViewList.size() + firstColumn;
 		for (int i = firstColumn; i < size; i++) {
 			view = makeView(row, i, widths[i + 1], heights[row + 1]);
@@ -482,23 +482,23 @@ public class TableFixHeaders extends ViewGroup {
 		removeTopOrBottom(columnViewList.size() - 1);
 	}
 
-	private void removeLeftOrRight(int position) {
+	private void removeLeftOrRight(final int position) {
 		removeView(rowViewList.remove(position));
 		for (List<View> list : bodyViewTable) {
 			removeView(list.remove(position));
 		}
 	}
 
-	private void removeTopOrBottom(int position) {
+	private void removeTopOrBottom(final int position) {
 		removeView(columnViewList.remove(position));
-		List<View> remove = bodyViewTable.remove(position);
+		final List<View> remove = bodyViewTable.remove(position);
 		for (View view : remove) {
 			removeView(view);
 		}
 	}
 
 	@Override
-	public void removeView(View view) {
+	public void removeView(final View view) {
 		super.removeView(view);
 
 		final int typeView = (Integer) view.getTag(R.id.tag_type_view);
@@ -543,7 +543,7 @@ public class TableFixHeaders extends ViewGroup {
 	}
 
 	@Override
-	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+	protected void onMeasure(final int widthMeasureSpec, final int heightMeasureSpec) {
 		final int widthMode = MeasureSpec.getMode(widthMeasureSpec);
 		final int heightMode = MeasureSpec.getMode(heightMeasureSpec);
 		final int widthSize = MeasureSpec.getSize(widthMeasureSpec);
@@ -571,7 +571,7 @@ public class TableFixHeaders extends ViewGroup {
 				w = sumArray(widths);
 			} else {
 				w = widthSize;
-				int sumArray = sumArray(widths);
+				final int sumArray = sumArray(widths);
 				if (sumArray < widthSize) {
 					final float factor = widthSize / (float) sumArray;
 					for (int i = 1; i < widths.length; i++) {
@@ -610,14 +610,14 @@ public class TableFixHeaders extends ViewGroup {
 		setMeasuredDimension(w, h);
 	}
 
-	private int sumArray(int array[]) {
+	private int sumArray(final int array[]) {
 		return sumArray(array, 0, array.length);
 	}
 
-	private int sumArray(int array[], int firstIndex, int count) {
+	private int sumArray(final int array[], final int firstIndex, final int count) {
 		int sum = 0;
-		count += firstIndex;
-		for (int i = firstIndex; i < count; i++) {
+		final int limit = count + firstIndex;
+		for (int i = firstIndex; i < limit; i++) {
 			sum += array[i];
 		}
 		return sum;
@@ -625,7 +625,7 @@ public class TableFixHeaders extends ViewGroup {
 
 	@SuppressLint("DrawAllocation")
 	@Override
-	protected void onLayout(boolean changed, int l, int t, int r, int b) {
+	protected void onLayout(final boolean changed, final int l, final int t, final int r, final int b) {
 		if (needRelayout || changed) {
 			needRelayout = false;
 			resetTable();
@@ -668,7 +668,7 @@ public class TableFixHeaders extends ViewGroup {
 				for (int i = firstRow; i < rowCount && top < height; i++) {
 					bottom = top + heights[i + 1];
 					left = widths[0] - scrollX;
-					List<View> list = new ArrayList<View>();
+					final List<View> list = new ArrayList<View>();
 					for (int j = firstColumn; j < columnCount && left < width; j++) {
 						right = left + widths[j + 1];
 						final View view = makeAndSetup(i, j, left, top, right, bottom);
@@ -689,15 +689,14 @@ public class TableFixHeaders extends ViewGroup {
 		scrollY = scrollBounds(scrollY, firstRow, heights, height);
 	}
 
-	private int scrollBounds(int desiredScroll, int firstCell, int sizes[], int viewSize) {
+	private int scrollBounds(final int desiredScroll, final int firstCell, final int sizes[], final int viewSize) {
 		if (desiredScroll == 0) {
-			// no op
+			return 0; // no op
 		} else if (desiredScroll < 0) {
-			desiredScroll = Math.max(desiredScroll, -sumArray(sizes, 1, firstCell));
+			return Math.max(desiredScroll, -sumArray(sizes, 1, firstCell));
 		} else {
-			desiredScroll = Math.min(desiredScroll, Math.max(0, sumArray(sizes, firstCell + 1, sizes.length - 1 - firstCell) + sizes[0] - viewSize));
+			return Math.min(desiredScroll, Math.max(0, sumArray(sizes, firstCell + 1, sizes.length - 1 - firstCell) + sizes[0] - viewSize));
 		}
-		return desiredScroll;
 	}
 
 	private void adjustFirstCellsAndScroll() {
@@ -712,21 +711,23 @@ public class TableFixHeaders extends ViewGroup {
 		firstRow = values[1];
 	}
 
-	private int[] adjustFirstCellsAndScroll(int scroll, int firstCell, int sizes[]) {
+	private int[] adjustFirstCellsAndScroll(final int scroll, final int firstCell, final int[] sizes) {
+		int left = scroll;
+		int first = firstCell;
 		if (scroll == 0) {
 			// no op
 		} else if (scroll > 0) {
-			while (sizes[firstCell + 1] < scroll) {
-				firstCell++;
-				scroll -= sizes[firstCell];
+			while (sizes[first + 1] < left) {
+				first++;
+				left -= sizes[first];
 			}
 		} else {
-			while (scroll < 0) {
-				scroll += sizes[firstCell];
-				firstCell--;
+			while (left < 0) {
+				left += sizes[first];
+				first--;
 			}
 		}
-		return new int[] { scroll, firstCell };
+		return new int[] { left, first };
 	}
 
 	private void shadowsVisibility() {
@@ -746,7 +747,7 @@ public class TableFixHeaders extends ViewGroup {
 
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	@SuppressWarnings("deprecation")
-	private void setAlpha(ImageView imageView, float alpha) {
+	private void setAlpha(final ImageView imageView, final float alpha) {
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
 			imageView.setAlpha(alpha);
 		} else {
@@ -754,7 +755,7 @@ public class TableFixHeaders extends ViewGroup {
 		}
 	}
 
-	private void addShadow(ImageView imageView, int l, int t, int r, int b) {
+	private void addShadow(final ImageView imageView, final int l, final int t, final int r, final int b) {
 		imageView.layout(l, t, r, b);
 		addView(imageView);
 	}
@@ -768,14 +769,14 @@ public class TableFixHeaders extends ViewGroup {
 		removeAllViews();
 	}
 
-	private View makeAndSetup(int row, int column, int left, int top, int right, int bottom) {
+	private View makeAndSetup(final int row, final int column, final int left, final int top, final int right, final int bottom) {
 		final View view = makeView(row, column, right - left, bottom - top);
 		view.layout(left, top, right, bottom);
 		return view;
 	}
 
 	@Override
-	protected boolean drawChild(Canvas canvas, View child, long drawingTime) {
+	protected boolean drawChild(final Canvas canvas, final View child, final long drawingTime) {
 		final boolean ret;
 
 		final Integer row = (Integer) child.getTag(R.id.tag_row);
@@ -799,7 +800,7 @@ public class TableFixHeaders extends ViewGroup {
 		return ret;
 	}
 
-	private View makeView(int row, int column, int w, int h) {
+	private View makeView(final int row, final int column, final int w, final int h) {
 		final int itemViewType = adapter.getItemViewType(row, column);
 		final View recycledView;
 		if (itemViewType == TableAdapter.IGNORE_ITEM_VIEW_TYPE) {
@@ -816,7 +817,7 @@ public class TableFixHeaders extends ViewGroup {
 		return view;
 	}
 
-	private void addTableView(View view, int row, int column) {
+	private void addTableView(final View view, final int row, final int column) {
 		if (row == -1 && column == -1) {
 			addView(view, getChildCount() - 4);
 		} else if (row == -1 || column == -1) {
@@ -847,11 +848,11 @@ public class TableFixHeaders extends ViewGroup {
 		private int lastX = 0;
 		private int lastY = 0;
 
-		Flinger(Context context) {
+		Flinger(final Context context) {
 			scroller = new Scroller(context);
 		}
 
-		void start(int initX, int initY, int initialVelocityX, int initialVelocityY, int maxX, int maxY) {
+		void start(final int initX, final int initY, final int initialVelocityX, final int initialVelocityY, final int maxX, final int maxY) {
 			scroller.fling(initX, initY, initialVelocityX, initialVelocityY, 0, maxX, 0, maxY);
 
 			lastX = initX;
@@ -864,11 +865,11 @@ public class TableFixHeaders extends ViewGroup {
 				return;
 			}
 
-			boolean more = scroller.computeScrollOffset();
-			int x = scroller.getCurrX();
-			int y = scroller.getCurrY();
-			int diffX = lastX - x;
-			int diffY = lastY - y;
+			final boolean more = scroller.computeScrollOffset();
+			final int x = scroller.getCurrX();
+			final int y = scroller.getCurrY();
+			final int diffX = lastX - x;
+			final int diffY = lastY - y;
 			if (diffX != 0 || diffY != 0) {
 				scrollBy(diffX, diffY);
 				lastX = x;

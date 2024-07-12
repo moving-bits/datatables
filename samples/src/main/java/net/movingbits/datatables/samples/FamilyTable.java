@@ -1,10 +1,7 @@
-package com.inqbarna.tablefixheaders.samples;
+package net.movingbits.datatables.samples;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.inqbarna.tablefixheaders.TableFixHeaders;
-import com.inqbarna.tablefixheaders.adapters.BaseTableAdapter;
+import net.movingbits.datatables.Datatable;
+import net.movingbits.datatables.adapters.BaseTableAdapter;
 
 import android.app.Activity;
 import android.content.Context;
@@ -13,13 +10,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class FamilyTable extends Activity {
 
 	private class NexusTypes {
 		private final String name;
 		private final List<Nexus> list;
 
-		NexusTypes(String name) {
+		NexusTypes(final String name) {
 			this.name = name;
 			list = new ArrayList<Nexus>();
 		}
@@ -28,7 +28,7 @@ public class FamilyTable extends Activity {
 			return list.size();
 		}
 
-		public Nexus get(int i) {
+		public Nexus get(final int i) {
 			return list.get(i);
 		}
 	}
@@ -36,7 +36,7 @@ public class FamilyTable extends Activity {
 	private class Nexus {
 		private final String[] data;
 
-		private Nexus(String name, String company, String version, String api, String storage, String inches, String ram) {
+		private Nexus(final String name, final String company, final String version, final String api, final String storage, final String inches, final String ram) {
 			data = new String[] {
 					name,
 					company,
@@ -49,13 +49,13 @@ public class FamilyTable extends Activity {
 	}
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.table);
 
-		TableFixHeaders tableFixHeaders = (TableFixHeaders) findViewById(R.id.table);
-		BaseTableAdapter baseTableAdapter = new FamilyNexusAdapter(this);
-		tableFixHeaders.setAdapter(baseTableAdapter);
+		final Datatable datatable = (Datatable) findViewById(R.id.table);
+		final BaseTableAdapter baseTableAdapter = new FamilyNexusAdapter(this);
+		datatable.setAdapter(baseTableAdapter);
 	}
 
 	public class FamilyNexusAdapter extends BaseTableAdapter {
@@ -82,7 +82,7 @@ public class FamilyTable extends Activity {
 		};
 		private final float density;
 
-		public FamilyNexusAdapter(Context context) {
+		public FamilyNexusAdapter(final Context context) {
 			familys = new NexusTypes[] {
 					new NexusTypes("Mobiles"),
 					new NexusTypes("Tablets"),
@@ -115,7 +115,7 @@ public class FamilyTable extends Activity {
 		}
 
 		@Override
-		public View getView(int row, int column, View convertView, ViewGroup parent) {
+		public View getView(final int row, final int column, final View convertView, final ViewGroup parent) {
 			final View view;
 			switch (getItemViewType(row, column)) {
 				case 0:
@@ -139,61 +139,46 @@ public class FamilyTable extends Activity {
 			return view;
 		}
 
-		private View getFirstHeader(int row, int column, View convertView, ViewGroup parent) {
-			if (convertView == null) {
-				convertView = getLayoutInflater().inflate(R.layout.item_table_header_first, parent, false);
-			}
-			((TextView) convertView.findViewById(android.R.id.text1)).setText(headers[0]);
-			return convertView;
+		private View getFirstHeader(final int row, final int column, final View convertView, final ViewGroup parent) {
+			final View v = convertView == null ? getLayoutInflater().inflate(R.layout.item_table_header_first, parent, false) : convertView;
+			((TextView) v.findViewById(android.R.id.text1)).setText(headers[0]);
+			return v;
 		}
 
-		private View getHeader(int row, int column, View convertView, ViewGroup parent) {
-			if (convertView == null) {
-				convertView = getLayoutInflater().inflate(R.layout.item_table_header, parent, false);
-			}
-			((TextView) convertView.findViewById(android.R.id.text1)).setText(headers[column + 1]);
-			return convertView;
+		private View getHeader(final int row, final int column, final View convertView, final ViewGroup parent) {
+			final View v = convertView == null ? getLayoutInflater().inflate(R.layout.item_table_header, parent, false) : convertView;
+			((TextView) v.findViewById(android.R.id.text1)).setText(headers[column + 1]);
+			return v;
 		}
 
-		private View getFirstBody(int row, int column, View convertView, ViewGroup parent) {
-			if (convertView == null) {
-				convertView = getLayoutInflater().inflate(R.layout.item_table_first, parent, false);
-			}
-			convertView.setBackgroundResource(row % 2 == 0 ? R.drawable.bg_table_color1 : R.drawable.bg_table_color2);
-			((TextView) convertView.findViewById(android.R.id.text1)).setText(getDevice(row).data[column + 1]);
-			return convertView;
+		private View getFirstBody(final int row, final int column, final View convertView, final ViewGroup parent) {
+			final View v = convertView == null ? getLayoutInflater().inflate(R.layout.item_table_first, parent, false) : convertView;
+			v.setBackgroundResource(row % 2 == 0 ? R.drawable.bg_table_color1 : R.drawable.bg_table_color2);
+			((TextView) v.findViewById(android.R.id.text1)).setText(getDevice(row).data[column + 1]);
+			return v;
 		}
 
-		private View getBody(int row, int column, View convertView, ViewGroup parent) {
-			if (convertView == null) {
-				convertView = getLayoutInflater().inflate(R.layout.item_table, parent, false);
-			}
-			convertView.setBackgroundResource(row % 2 == 0 ? R.drawable.bg_table_color1 : R.drawable.bg_table_color2);
-			((TextView) convertView.findViewById(android.R.id.text1)).setText(getDevice(row).data[column + 1]);
-			return convertView;
+		private View getBody(final int row, final int column, final View convertView, final ViewGroup parent) {
+			final View v = convertView == null ? getLayoutInflater().inflate(R.layout.item_table, parent, false) : convertView;
+			v.setBackgroundResource(row % 2 == 0 ? R.drawable.bg_table_color1 : R.drawable.bg_table_color2);
+			((TextView) v.findViewById(android.R.id.text1)).setText(getDevice(row).data[column + 1]);
+			return v;
 		}
 
-		private View getFamilyView(int row, int column, View convertView, ViewGroup parent) {
-			if (convertView == null) {
-				convertView = getLayoutInflater().inflate(R.layout.item_table_family, parent, false);
-			}
-			final String string;
-			if (column == -1) {
-				string = getFamily(row).name;
-			} else {
-				string = "";
-			}
-			((TextView) convertView.findViewById(android.R.id.text1)).setText(string);
-			return convertView;
+		private View getFamilyView(final int row, final int column, final View convertView, final ViewGroup parent) {
+			final View v = convertView == null ? getLayoutInflater().inflate(R.layout.item_table_family, parent, false) : convertView;
+			final String string = column == -1 ? getFamily(row).name : "";
+			((TextView) v.findViewById(android.R.id.text1)).setText(string);
+			return v;
 		}
 
 		@Override
-		public int getWidth(int column) {
+		public int getWidth(final int column) {
 			return Math.round(widths[column + 1] * density);
 		}
 
 		@Override
-		public int getHeight(int row) {
+		public int getHeight(final int row) {
 			final int height;
 			if (row == -1) {
 				height = 35;
@@ -206,7 +191,7 @@ public class FamilyTable extends Activity {
 		}
 
 		@Override
-		public int getItemViewType(int row, int column) {
+		public int getItemViewType(final int row, final int column) {
 			final int itemViewType;
 			if (row == -1 && column == -1) {
 				itemViewType = 0;
@@ -222,32 +207,35 @@ public class FamilyTable extends Activity {
 			return itemViewType;
 		}
 
-		private boolean isFamily(int row) {
+		private boolean isFamily(final int row) {
 			int family = 0;
-			while (row > 0) {
-				row -= familys[family].size() + 1;
+			int r = row;
+			while (r > 0) {
+				r -= familys[family].size() + 1;
 				family++;
 			}
-			return row == 0;
+			return r == 0;
 		}
 
-		private NexusTypes getFamily(int row) {
+		private NexusTypes getFamily(final int row) {
 			int family = 0;
-			while (row >= 0) {
-				row -= familys[family].size() + 1;
+			int r = row;
+			while (r >= 0) {
+				r -= familys[family].size() + 1;
 				family++;
 			}
 			return familys[family - 1];
 		}
 
-		private Nexus getDevice(int row) {
+		private Nexus getDevice(final int row) {
 			int family = 0;
-			while (row >= 0) {
-				row -= familys[family].size() + 1;
+			int r = row;
+			while (r >= 0) {
+				r -= familys[family].size() + 1;
 				family++;
 			}
 			family--;
-			return familys[family].get(row + familys[family].size());
+			return familys[family].get(r + familys[family].size());
 		}
 
 		@Override
