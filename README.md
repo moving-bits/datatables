@@ -1,3 +1,5 @@
+This repository has been superseded by [Grid](https://github.com/moving-bits/grid)
+
 # TableFixHeaders
 
 This is a stripped-down version of [InQBarna's TableFixHeader](https://github.com/InQBarna/TableFixHeaders/), adjusted to my needs.
